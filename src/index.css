@@ -248,6 +248,17 @@
     scroll-behavior: smooth;
   }
 
+  /* Clear fixed floating nav when jumping to #sections */
+  section[id],
+  [id="home"],
+  [id="projects"],
+  [id="experience"],
+  [id="skills"],
+  [id="achievements"],
+  [id="contact"] {
+    scroll-margin-top: 5.5rem;
+  }
+
   body {
     background-color: var(--void);
     color: var(--text);
@@ -318,6 +329,27 @@
   border: 1px solid var(--line);
   color: var(--text);
   box-shadow: 0 1px 0 rgba(var(--shadow-rgb), 0.04), 0 10px 28px rgba(var(--shadow-rgb), 0.08);
+}
+
+/* Floating site nav — always follows active theme tokens */
+.site-nav {
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text);
+}
+.site-nav--scrolled {
+  background: color-mix(in srgb, var(--panel) 94%, var(--void));
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+}
+[data-theme="paper"] .site-nav {
+  background: color-mix(in srgb, var(--panel) 96%, transparent);
+  border-color: var(--line);
+  box-shadow: 0 8px 28px rgba(var(--shadow-rgb), 0.1);
+}
+[data-theme="paper"] .site-nav--scrolled {
+  background: var(--panel);
 }
 
 /* Paper-only: quieter ambient + solid readable surfaces */

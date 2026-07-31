@@ -1,7 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 const SECTIONS = ['home', 'projects', 'experience', 'skills', 'achievements', 'contact'];
+
+function getActiveSectionId() {
+  const focusY = Math.min(120, Math.max(72, window.innerHeight * 0.18));
+  let active = SECTIONS[0];
+  for (const id of SECTIONS) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    if (el.getBoundingClientRect().top <= focusY) active = id;
+  }
+  const doc = document.documentElement;
+  if (window.scrollY + window.innerHeight >= doc.scrollHeight - 48) {
+    active = SECTIONS[SECTIONS.length - 1];
+  }
+  return active;
+}
 
 /**
  * Fixed left spine that ties the whole page together —
@@ -11,21 +26,28 @@ export default function ScrollRail() {
   const { scrollYProgress } = useScroll();
   const scaleY = useSpring(scrollYProgress, { stiffness: 100, damping: 28 });
   const [active, setActive] = useState('home');
+  const ticking = useRef(false);
 
   useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-        });
-      },
-      { threshold: 0.2, rootMargin: '-30% 0px -50% 0px' }
-    );
-    SECTIONS.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) obs.observe(el);
-    });
-    return () => obs.disconnect();
+    const sync = () => {
+      const next = getActiveSectionId();
+      setActive((prev) => (prev === next ? prev : next));
+    };
+    const onScroll = () => {
+      if (ticking.current) return;
+      ticking.current = true;
+      requestAnimationFrame(() => {
+        sync();
+        ticking.current = false;
+      });
+    };
+    sync();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
   }, []);
 
   return (
@@ -47,7 +69,7 @@ export default function ScrollRail() {
             <button
               key={id}
               type="button"
-              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               className="group relative flex items-center"
               title={id}
             >
