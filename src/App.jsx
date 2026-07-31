@@ -8,6 +8,7 @@ import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import ScrollProgress from './components/fx/ScrollProgress';
 import SectionBridge from './components/fx/SectionBridge';
+import ThemeToggle from './components/ThemeToggle';
 
 const CustomCursor = lazy(() => import('./components/fx/CustomCursor'));
 const SignalField = lazy(() => import('./components/fx/SignalField'));
@@ -40,6 +41,8 @@ const App = () => {
 
       {/* light grid only — SignalField carries color/motion */}
       <div className="fixed inset-0 z-0 pointer-events-none grid-bg opacity-15" aria-hidden="true" />
+
+      <ThemeToggle />
 
       <div className="relative z-10">
         <Navigation />

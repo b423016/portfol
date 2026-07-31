@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import { readThemeColors } from '../../theme/themes';
 
 /**
- * Full-page ambient: real-looking network packets + frequency + time flow.
- * Canvas 2D · ~30fps · pauses when tab hidden.
+ * Full-page ambient: network packets + frequency + time flow.
+ * Colors follow active site theme (data-theme).
  */
 export default function SignalField() {
   const canvasRef = useRef(null);
@@ -25,11 +26,19 @@ export default function SignalField() {
     let h = 0;
     let dpr = 1;
 
-    const CYAN = [34, 211, 238];
-    const SKY = [56, 189, 248];
-    const ICE = [226, 232, 240];
-    const EMERALD = [52, 211, 153];
-    const MUTED = [100, 116, 139];
+    let theme = readThemeColors();
+    const refreshTheme = () => {
+      theme = readThemeColors();
+    };
+
+    const ICE = () => theme.packet1;
+    const CYAN = () => theme.packet2;
+    const EMERALD = () => theme.packet3;
+    const SKY = () => theme.accentRgb;
+    const MUTED = () => {
+      // derive muted from slate-ish fallback
+      return [100, 116, 139];
+    };
 
     const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
 
@@ -133,7 +142,7 @@ export default function SignalField() {
 
       // body by kind
       const body =
-        pkt.kind === 'rtp' ? CYAN : pkt.kind === 'ack' ? EMERALD : ICE;
+        pkt.kind === 'rtp' ? CYAN() : pkt.kind === 'ack' ? EMERALD() : ICE();
       ctx.fillStyle = rgba(body, 0.88);
       ctx.strokeStyle = rgba(body, 1);
       ctx.lineWidth = 1;
@@ -158,7 +167,7 @@ export default function SignalField() {
       }
 
       // tiny flag bit
-      ctx.fillStyle = rgba(SKY, 0.9);
+      ctx.fillStyle = rgba(SKY(), 0.9);
       ctx.fillRect(pw / 2 - 3, -ph / 2 + 1, 2, ph - 2);
 
       ctx.restore();
@@ -184,10 +193,11 @@ export default function SignalField() {
       const timeY = h * 0.08;
       ctx.clearRect(0, 0, w, h);
 
-      // soft wash
+      // soft wash from theme accent
+      const ar = theme.accentRgb;
       const wash = ctx.createRadialGradient(w * 0.5, h * 0.4, 0, w * 0.5, h * 0.5, Math.max(w, h) * 0.7);
-      wash.addColorStop(0, 'rgba(34, 211, 238, 0.04)');
-      wash.addColorStop(0.5, 'rgba(52, 211, 153, 0.03)');
+      wash.addColorStop(0, `rgba(${ar[0]},${ar[1]},${ar[2]},0.05)`);
+      wash.addColorStop(0.5, `rgba(${ar[0]},${ar[1]},${ar[2]},0.03)`);
       wash.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = wash;
       ctx.fillRect(0, 0, w, h);
@@ -196,12 +206,12 @@ export default function SignalField() {
       ctx.beginPath();
       ctx.moveTo(w * 0.06, timeY);
       ctx.lineTo(w * 0.94, timeY);
-      ctx.strokeStyle = rgba(MUTED, 0.35);
+      ctx.strokeStyle = rgba(MUTED(), 0.35);
       ctx.lineWidth = 1;
       ctx.stroke();
 
       ctx.font = `${mobile ? 9 : 10}px "JetBrains Mono", monospace`;
-      ctx.fillStyle = rgba(MUTED, 0.55);
+      ctx.fillStyle = rgba(MUTED(), 0.55);
       ctx.fillText('t →', w * 0.06, timeY - 8);
       ctx.fillText(`time · ${(t + scrollP * 10).toFixed(1)}s`, w * 0.06, timeY + 16);
 
@@ -214,10 +224,10 @@ export default function SignalField() {
         ctx.beginPath();
         ctx.moveTo(x, timeY - (major ? 6 : 3));
         ctx.lineTo(x, timeY + (major ? 6 : 3));
-        ctx.strokeStyle = rgba(CYAN, major ? 0.45 : 0.2);
+        ctx.strokeStyle = rgba(CYAN(), major ? 0.45 : 0.2);
         ctx.stroke();
         if (major) {
-          ctx.fillStyle = rgba(ICE, 0.35);
+          ctx.fillStyle = rgba(ICE(), 0.35);
           ctx.fillText(`${((x + t * 10) % 1000) | 0}ms`, x - 10, timeY + 18);
         }
       }
@@ -227,12 +237,12 @@ export default function SignalField() {
       ctx.beginPath();
       ctx.moveTo(playX, timeY - 10);
       ctx.lineTo(playX, timeY + 10);
-      ctx.strokeStyle = rgba(EMERALD, 0.7);
+      ctx.strokeStyle = rgba(EMERALD(), 0.7);
       ctx.lineWidth = 1.5;
       ctx.stroke();
       ctx.beginPath();
       ctx.arc(playX, timeY, 3, 0, Math.PI * 2);
-      ctx.fillStyle = rgba(EMERALD, 0.85);
+      ctx.fillStyle = rgba(EMERALD(), 0.85);
       ctx.fill();
 
       // --- NETWORK LAYER ---
@@ -244,7 +254,7 @@ export default function SignalField() {
         ctx.beginPath();
         ctx.moveTo(A.x, A.y);
         ctx.lineTo(B.x, B.y);
-        ctx.strokeStyle = rgba(MUTED, 0.22);
+        ctx.strokeStyle = rgba(MUTED(), 0.22);
         ctx.lineWidth = 1;
         ctx.setLineDash([4, 6]);
         ctx.stroke();
@@ -257,17 +267,17 @@ export default function SignalField() {
         const glow = 0.35 + 0.25 * Math.sin(n.pulse + i);
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r + 4, 0, Math.PI * 2);
-        ctx.fillStyle = rgba(CYAN, 0.06 * glow);
+        ctx.fillStyle = rgba(CYAN(), 0.06 * glow);
         ctx.fill();
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = rgba(ICE, 0.75);
+        ctx.fillStyle = rgba(ICE(), 0.75);
         ctx.fill();
-        ctx.strokeStyle = rgba(CYAN, 0.5);
+        ctx.strokeStyle = rgba(CYAN(), 0.5);
         ctx.lineWidth = 1;
         ctx.stroke();
         if (!mobile) {
-          ctx.fillStyle = rgba(MUTED, 0.5);
+          ctx.fillStyle = rgba(MUTED(), 0.5);
           ctx.font = '9px "JetBrains Mono", monospace';
           ctx.fillText(n.label, n.x + 8, n.y + 3);
         }
@@ -296,7 +306,7 @@ export default function SignalField() {
         ctx.moveTo(x - Math.cos(angle) * 14, y - Math.sin(angle) * 14);
         ctx.lineTo(x, y);
         ctx.strokeStyle = rgba(
-          pkt.kind === 'rtp' ? CYAN : pkt.kind === 'ack' ? EMERALD : ICE,
+          pkt.kind === 'rtp' ? CYAN() : pkt.kind === 'ack' ? EMERALD() : ICE(),
           0.25
         );
         ctx.lineWidth = 2;
@@ -306,7 +316,7 @@ export default function SignalField() {
 
         // seq label occasionally
         if (!mobile && pkt.p > 0.35 && pkt.p < 0.65) {
-          ctx.fillStyle = rgba(MUTED, 0.4);
+          ctx.fillStyle = rgba(MUTED(), 0.4);
           ctx.font = '8px "JetBrains Mono", monospace';
           ctx.fillText(
             `${pkt.kind}#${pkt.seq}`,
@@ -319,7 +329,7 @@ export default function SignalField() {
       // --- FREQUENCY FLOW (middle waveform strip) ---
       const waveY = h * 0.52 + Math.sin(scrollP * Math.PI) * 12;
       ctx.font = `${mobile ? 9 : 10}px "JetBrains Mono", monospace`;
-      ctx.fillStyle = rgba(MUTED, 0.5);
+      ctx.fillStyle = rgba(MUTED(), 0.5);
       ctx.fillText('ƒ frequency', w * 0.06, waveY - 36);
 
       // multi-harmonic live signal (Fourier sum)
@@ -350,7 +360,7 @@ export default function SignalField() {
           { f: 2.7, a: 0.014, spd: 2.1, ph: 1 },
           { f: 5.1, a: 0.007, spd: 1.1, ph: 2 },
         ],
-        CYAN,
+        CYAN(),
         1.6,
         0.4
       );
@@ -359,7 +369,7 @@ export default function SignalField() {
           { f: 1.8, a: 0.018, spd: 1.7, ph: 0.5 },
           { f: 3.4, a: 0.009, spd: 2.4, ph: 1.5 },
         ],
-        EMERALD,
+        EMERALD(),
         1.2,
         0.28
       );
@@ -375,20 +385,20 @@ export default function SignalField() {
         y += Math.sin(nx * Math.PI * 2 * 2.7 + t * 2.1) * h * 0.014;
         ctx.beginPath();
         ctx.arc(x, y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = rgba(ICE, 0.5);
+        ctx.fillStyle = rgba(ICE(), 0.5);
         ctx.fill();
       }
 
       // --- SPECTRUM (frequency domain) bottom ---
       const spectrumY = h * 0.82;
       const spectrumH = mobile ? 40 : 58;
-      ctx.fillStyle = rgba(MUTED, 0.5);
+      ctx.fillStyle = rgba(MUTED(), 0.5);
       ctx.fillText('F(ω) spectrum', w * 0.06, spectrumY - spectrumH - 8);
 
       ctx.beginPath();
       ctx.moveTo(w * 0.06, spectrumY);
       ctx.lineTo(w * 0.94, spectrumY);
-      ctx.strokeStyle = rgba(MUTED, 0.3);
+      ctx.strokeStyle = rgba(MUTED(), 0.3);
       ctx.lineWidth = 1;
       ctx.stroke();
 
@@ -403,7 +413,7 @@ export default function SignalField() {
             Math.abs(Math.sin(t * b.freq * 0.5 + b.phase) * Math.cos(t * 0.35 + i * 0.07));
         const barH = spectrumH * envelope * pulse * b.amp;
         const x = baseX + i * binW;
-        const col = i / BINS < 0.35 ? CYAN : i / BINS < 0.7 ? EMERALD : SKY;
+        const col = i / BINS < 0.35 ? CYAN() : i / BINS < 0.7 ? EMERALD() : SKY();
         const grad = ctx.createLinearGradient(0, spectrumY, 0, spectrumY - barH);
         grad.addColorStop(0, rgba(col, 0.05));
         grad.addColorStop(1, rgba(col, 0.55));
@@ -412,7 +422,7 @@ export default function SignalField() {
       }
 
       // ω axis label
-      ctx.fillStyle = rgba(MUTED, 0.45);
+      ctx.fillStyle = rgba(MUTED(), 0.45);
       ctx.fillText('ω →', w * 0.9, spectrumY + 14);
 
       raf = requestAnimationFrame(draw);
@@ -438,15 +448,21 @@ export default function SignalField() {
       stop();
     }
 
-    window.addEventListener('resize', resize, { passive: true });
-    document.addEventListener('visibilitychange', () => {
+    const onVis = () => {
       if (document.hidden) stop();
       else start();
-    });
+    };
+    const onTheme = () => refreshTheme();
+
+    window.addEventListener('resize', resize, { passive: true });
+    document.addEventListener('visibilitychange', onVis);
+    window.addEventListener('themechange', onTheme);
 
     return () => {
       stop();
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', onVis);
+      window.removeEventListener('themechange', onTheme);
     };
   }, []);
 

@@ -2,6 +2,7 @@ import React, { Suspense, useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Text, ContactShadows, Stars } from '@react-three/drei';
 import * as THREE from 'three';
+import { readThemeColors } from '../../theme/themes';
 
 /**
  * Optimized hero 3D — same look, less GPU/CPU.
@@ -111,31 +112,41 @@ function OrbitSystem({ mouse, lowPower }) {
   const packetRefs = useRef([]);
   const segs = lowPower ? 48 : 72;
 
-  const ringMat = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        color: '#34d399',
-        emissive: '#047857',
-        emissiveIntensity: 0.22,
-        metalness: 0.4,
-        roughness: 0.45,
-        transparent: true,
-        opacity: 0.65,
-      }),
-    []
-  );
+  const ringMat = useMemo(() => {
+    const c = readThemeColors();
+    return new THREE.MeshStandardMaterial({
+      color: c.ring,
+      emissive: c.ringEmissive,
+      emissiveIntensity: 0.22,
+      metalness: 0.4,
+      roughness: 0.45,
+      transparent: true,
+      opacity: 0.65,
+    });
+  }, []);
 
-  const packetMat = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        color: '#d1fae5',
-        emissive: '#34d399',
-        emissiveIntensity: 0.35,
-        metalness: 0.3,
-        roughness: 0.4,
-      }),
-    []
-  );
+  const packetMat = useMemo(() => {
+    const c = readThemeColors();
+    return new THREE.MeshStandardMaterial({
+      color: c.accentGlow || c.accent,
+      emissive: c.ring,
+      emissiveIntensity: 0.35,
+      metalness: 0.3,
+      roughness: 0.4,
+    });
+  }, []);
+
+  useEffect(() => {
+    const sync = () => {
+      const c = readThemeColors();
+      ringMat.color.set(c.ring);
+      ringMat.emissive.set(c.ringEmissive);
+      packetMat.color.set(c.accent);
+      packetMat.emissive.set(c.ring);
+    };
+    window.addEventListener('themechange', sync);
+    return () => window.removeEventListener('themechange', sync);
+  }, [ringMat, packetMat]);
 
   useThrottleFrame((_, delta) => {
     if (root.current) {
@@ -269,13 +280,23 @@ function SoftWave({ mouse, lowPower }) {
     const pos = new Float32Array(n * 3);
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const c = readThemeColors();
     const mat = new THREE.LineBasicMaterial({
-      color: '#2dd4bf',
+      color: c.accent,
       transparent: true,
       opacity: 0.28,
     });
     return { line: new THREE.Line(geo, mat), pos };
   }, [n]);
+
+  useEffect(() => {
+    const sync = () => {
+      const c = readThemeColors();
+      line.material.color.set(c.accent);
+    };
+    window.addEventListener('themechange', sync);
+    return () => window.removeEventListener('themechange', sync);
+  }, [line]);
 
   useThrottleFrame((s) => {
     const t = s.clock.elapsedTime;
@@ -462,7 +483,7 @@ export default function Scene3D({ className = '' }) {
       }}
       aria-hidden="true"
     >
-      <div className="absolute inset-0 bg-[#07090e]" />
+      <div className="absolute inset-0 bg-void" />
       <Canvas
         dpr={lowPower ? 1 : [1, 1.25]}
         camera={{ position: [0, 0.35, 5.6], fov: 40 }}
@@ -486,7 +507,7 @@ export default function Scene3D({ className = '' }) {
         </Suspense>
       </Canvas>
       <div className="pointer-events-none absolute inset-0 z-[2] rounded-2xl ring-1 ring-inset ring-white/[0.08]" />
-      <div className="pointer-events-none absolute inset-0 z-[2] rounded-2xl bg-gradient-to-t from-[#05070B]/50 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 z-[2] rounded-2xl bg-gradient-to-t from-void/50 via-transparent to-transparent" />
     </div>
   );
 }

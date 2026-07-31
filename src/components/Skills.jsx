@@ -5,9 +5,9 @@ import {
 } from 'react-icons/fa';
 import {
     SiFastapi, SiPostgresql, SiRedis, SiOpencv, SiNextdotjs,
-    SiTypescript, SiRust, SiJenkins, SiGrafana,
+    SiTypescript, SiRust, SiJenkins, SiGrafana, SiGooglecloud,
 } from 'react-icons/si';
-import { TbBrain, TbServer, TbBrandCpp, TbNetwork } from 'react-icons/tb';
+import { TbBrain, TbServer, TbBrandCpp, TbNetwork, TbBrandAzure } from 'react-icons/tb';
 import SectionShell from './fx/SectionShell';
 
 const HUDCard = ({ title, subtitle, icons, colSpan = 'col-span-1', delay }) => (
@@ -101,9 +101,11 @@ const Skills = () => {
 
                     <HUDCard
                         title="CLOUD & DATA"
-                        subtitle="AWS EC2, Docker, Postgres, Redis, Supabase, Jenkins, OpenTelemetry, Grafana."
+                        subtitle="AWS, GCP, Azure · Docker, Postgres, Redis, Supabase, Jenkins, OpenTelemetry, Grafana."
                         icons={[
                             <FaAws size={24} className="text-orange-400" key="aws" />,
+                            <SiGooglecloud size={24} className="text-blue-400" key="gcp" />,
+                            <TbBrandAzure size={24} className="text-sky-500" key="azure" />,
                             <FaDocker size={24} className="text-blue-500" key="docker" />,
                             <SiPostgresql size={24} className="text-blue-300" key="pg" />,
                             <SiRedis size={24} className="text-red-500" key="redis" />,
