@@ -1,175 +1,243 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FiGithub, FiExternalLink, FiCpu, FiDatabase, FiCode, FiActivity } from 'react-icons/fi';
+import React, { useRef } from 'react';
+import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion';
+import { FiGithub, FiExternalLink } from 'react-icons/fi';
+import { Reveal } from './fx/Reveal';
+import SectionShell from './fx/SectionShell';
 
-const ProjectCard = ({ title, description, tags, id, status, delay, githubLink, externalLink }) => (
+function TiltCard({ children, className = '' }) {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotX = useMotionValue(0);
+  const rotY = useMotionValue(0);
+  const rx = useSpring(rotX, { stiffness: 200, damping: 20 });
+  const ry = useSpring(rotY, { stiffness: 200, damping: 20 });
+
+  const handleMove = (e) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    x.set(e.clientX - r.left);
+    y.set(e.clientY - r.top);
+    rotY.set((px - 0.5) * 12);
+    rotX.set((0.5 - py) * 12);
+  };
+
+  const handleLeave = () => {
+    rotX.set(0);
+    rotY.set(0);
+  };
+
+  // Neutral white glow on hover — not permanent teal
+  const glow = useMotionTemplate`radial-gradient(420px circle at ${x}px ${y}px, rgba(255,255,255,0.08), transparent 55%)`;
+
+  return (
     <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay, duration: 0.5 }}
-        className="group relative bg-black/40 border border-white/10 rounded-xl overflow-hidden hover:border-electric-blue/50 transition-all duration-500 backdrop-blur-sm flex flex-col h-full"
+      ref={ref}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
+      className={`relative group ${className}`}
     >
-        {/* Holographic Scanline Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-0 bg-[length:100%_4px,3px_100%] pointer-events-none opacity-20" />
+      <motion.div
+        className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+        style={{ background: glow }}
+      />
+      {children}
+    </motion.div>
+  );
+}
 
-        {/* "Power Up" Glow Effect */}
-        <div className="absolute inset-0 bg-electric-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
-
-        <div className="relative z-10 p-6 flex flex-col h-full">
-            {/* Header: Project ID & Status */}
-            <div className="flex justify-between items-center mb-6 font-mono text-xs tracking-widest text-gray-500 border-b border-white/5 pb-4">
-                <span className="text-electric-blue group-hover:animate-pulse">ID: {id}</span>
-                <div className="flex items-center gap-2">
-                    <span className={`w-2 h-2 rounded-full ${status === 'LIVE' ? 'bg-green-500' : 'bg-yellow-500'} animate-pulse`} />
-                    <span>[{status}]</span>
-                </div>
-            </div>
-
-            {/* Title & Icons */}
-            <div className="mb-4">
-                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-electric-blue transition-colors duration-300 font-mono">
-                    {title}
-                </h3>
-                <p className="text-gray-400 text-sm leading-relaxed line-clamp-3 mb-6">
-                    {description}
-                </p>
-            </div>
-
-            {/* Tech Stack Pills - Cyberpunk Style */}
-            <div className="flex flex-wrap gap-2 mt-auto mb-6">
-                {tags.map((tag, i) => (
-                    <span key={i} className="px-2 py-1 text-[10px] font-mono border border-white/10 text-gray-400 bg-white/5 rounded hover:border-electric-blue/50 hover:text-electric-blue transition-colors cursor-default">
-                        {tag}
-                    </span>
-                ))}
-            </div>
-
-            {/* Footer: Action Buttons */}
-            <div className="flex gap-4 pt-4 border-t border-white/5 mt-auto">
-                <a href={githubLink || "https://github.com/b423016"} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-2 bg-white/5 hover:bg-white/10 text-sm font-mono text-gray-300 hover:text-white transition-all rounded group/btn border border-transparent hover:border-white/20">
-                    <FiGithub /> <span className="group-hover/btn:hidden">SOURCE</span> <span className="hidden group-hover/btn:inline">ACCESS_CODE</span>
-                </a>
-                {externalLink && (
-                    <a href={externalLink} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-2 bg-electric-blue/10 hover:bg-electric-blue/20 text-sm font-mono text-electric-blue border border-electric-blue/20 hover:border-electric-blue/50 transition-all rounded cursor-pointer">
-                        <FiActivity /> DEPLOY
-                    </a>
-                )}
-            </div>
+const ProjectCard = ({
+  title,
+  description,
+  tags,
+  id,
+  status,
+  delay,
+  githubLink,
+  externalLink,
+}) => (
+  <motion.div
+    initial={{ opacity: 0, y: 48 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-60px' }}
+    transition={{ delay, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+    style={{ perspective: 1000 }}
+  >
+    <TiltCard className="h-full rounded-xl border border-white/10 bg-panel/60 overflow-hidden transition-all duration-400 hover:border-white/25 hover:bg-panel/90 hover:shadow-[0_20px_50px_rgba(0,0,0,0.45)]">
+      <div className="relative z-10 p-6 flex flex-col h-full min-h-[300px]">
+        <div className="flex justify-between items-center mb-5 font-mono text-[10px] tracking-widest text-steel-dim border-b border-white/5 pb-4">
+          <span className="text-steel group-hover:text-white transition-colors">{id}</span>
+          <div className="flex items-center gap-2">
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                status === 'LIVE' ? 'bg-white' : 'bg-steel-dim'
+              } group-hover:animate-pulse`}
+            />
+            <span className="text-steel">[{status}]</span>
+          </div>
         </div>
 
-        {/* Corner Markers */}
-        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/20 group-hover:border-electric-blue transition-colors" />
-        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/20 group-hover:border-electric-blue transition-colors" />
-        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-white/20 group-hover:border-electric-blue transition-colors" />
-        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/20 group-hover:border-electric-blue transition-colors" />
-    </motion.div>
+        <h3
+          className="text-xl sm:text-2xl font-display font-bold text-white mb-3 group-hover:tracking-tight transition-all duration-300"
+          style={{ transform: 'translateZ(24px)' }}
+        >
+          {title}
+        </h3>
+        <p className="text-steel text-sm leading-relaxed mb-6 flex-1">{description}</p>
+
+        <div className="flex flex-wrap gap-2 mb-6">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-2 py-1 text-[10px] font-mono border border-white/10 text-steel bg-white/[0.03] rounded group-hover:border-white/20 group-hover:text-steel-bright transition-colors"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex gap-3 pt-4 border-t border-white/5 mt-auto">
+          {githubLink && (
+            <a
+              href={githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor="hover"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-white/5 hover:bg-white/10 text-xs font-mono text-steel-bright hover:text-white transition-all rounded border border-transparent hover:border-white/15"
+            >
+              <FiGithub /> SOURCE
+            </a>
+          )}
+          {externalLink && (
+            <a
+              href={externalLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor="hover"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-white/10 hover:bg-white/15 text-xs font-mono text-white border border-white/15 hover:border-white/30 transition-all rounded"
+            >
+              <FiExternalLink /> LIVE
+            </a>
+          )}
+        </div>
+      </div>
+    </TiltCard>
+  </motion.div>
 );
 
 const Projects = () => {
-    const projects = [
-        {
-            id: "PRJ-01",
-            status: "DEV",
-            title: "NF3-Pro Chess Platform",
-            description: "Advanced chess platform with legal move validation using OpenCV and VLMs. Fine-tuned Qwen2.5-VL-3B model achieving 87% accuracy.",
-            tags: ["OPENCV", "VLM", "FASTAPI", "PYTHON"],
-            githubLink: "https://github.com/b423016/NF3-Pro",
-            externalLink: "https://nf3-pro.vercel.app/",
-            delay: 0.1
-        },
-        {
-            id: "PRJ-02",
-            status: "DEV",
-            title: "ByteFit Manager",
-            description: "Variable-size memory allocator simulation benchmarking placement strategies. Optimized free-list management using Red-Black Trees.",
-            tags: ["JAVA", "OS", "ALGORITHMS", "SYSTEMS"],
-            githubLink: "https://github.com/b423016/ByteFit-Manager",
-            delay: 0.2
-        },
-        {
-            id: "PRJ-03",
-            status: "DEV",
-            title: "Project Alpha",
-            description: "Experimental AI development sandbox exploring advanced agentic behaviors and neural architectures.",
-            tags: ["AI", "RESEARCH", "NEURAL-NETS", "PYTHON"],
-            githubLink: "https://github.com/b423016/Project_alpha",
-            delay: 0.3
-        },
-        {
-            id: "PRJ-04",
-            status: "SOLVED",
-            title: "CSES Solutions",
-            description: "Optimized C++ solutions for the CSES Problem Set. Focus on high-performance algorithms and data structures.",
-            tags: ["C++", "ALGORITHMS", "COMPETITIVE", "MATH"],
-            githubLink: "https://github.com/b423016/CSES_SOLN",
-            delay: 0.4
-        },
-        {
-            id: "PRJ-05",
-            status: "SOLVED",
-            title: "Codeforces Archive",
-            description: "Comprehensive repository of solution code for Codeforces contests. automated testing and template generation.",
-            tags: ["C++", "CP", "MATH", "DP"],
-            githubLink: "https://github.com/b423016/codeforces",
-            delay: 0.5
-        },
-        {
-            id: "PRJ-06",
-            status: "DEV",
-            title: "Multi-modal AI Service",
-            description: "Scalable AI service integrating text and image generation pipelines. Implements RAG for context-aware responses.",
-            tags: ["GENAI", "PYTHON", "RAG", "LLMS"],
-            delay: 0.6
-        }
-    ];
+  const projects = [
+    {
+      id: 'PRJ-01',
+      status: 'LIVE',
+      title: 'NF3-Pro Chess Platform',
+      description:
+        'Led a 3-person team building chess tournament microservices on AWS EC2 — 5k+ req / 15 min for 250+ concurrent users. Fine-tuned Qwen 2.5 VLM for match-slip OCR (<10.1% CER), FIDE pairings, OpenTelemetry + Grafana.',
+      tags: ['PYTHON', 'FASTAPI', 'VLM', 'AWS EC2', 'OTEL'],
+      externalLink: 'https://www.nf3pro.com',
+      delay: 0.05,
+    },
+    {
+      id: 'PRJ-02',
+      status: 'SHIPPED',
+      title: 'Xalen Ephemeris',
+      description:
+        'Pure-Rust Swiss Ephemeris replacement (Apache-2.0): memory-safe, zero data files, WASM. Validated on 100k charts — 0 charts >0.1° divergence. 12+ traditions. 650+ GitHub stars · 50+ forks.',
+      tags: ['RUST', 'WASM', 'APACHE-2.0', 'OPEN SOURCE'],
+      githubLink: 'https://github.com/vedika-io/xalen-ephemeris',
+      delay: 0.1,
+    },
+    {
+      id: 'PRJ-03',
+      status: 'SHIPPED',
+      title: 'Glance Fashion',
+      description:
+        'Multimodal fashion retrieval that fixes CLIP bag-of-words binding. FashionSigLIP + training-free compositional re-ranker so “red tie and white shirt” means that — not the swap.',
+      tags: ['PYTHON', 'SIGLIP', 'LANCEDB', 'CV'],
+      githubLink: 'https://github.com/b423016/Glance-fashion',
+      delay: 0.15,
+    },
+    {
+      id: 'PRJ-04',
+      status: 'SHIPPED',
+      title: 'Quant Hedging Terminal',
+      description:
+        'Full-stack options terminal. 5-node LangGraph agent for delta-neutral hedging under 800ms. Black-Scholes Greeks + Alpaca for 50+ concurrent positions.',
+      tags: ['NEXT.JS', 'FASTAPI', 'LANGGRAPH', 'QUANT'],
+      githubLink: 'https://github.com/b423016/Quant-hedging-terminal',
+      delay: 0.2,
+    },
+    {
+      id: 'PRJ-05',
+      status: 'SHIPPED',
+      title: 'ByteFit Manager',
+      description:
+        'Variable-size memory allocator simulation with Red-Black Tree free-list management — systems-level OS learning.',
+      tags: ['JAVA', 'OS', 'ALGORITHMS'],
+      githubLink: 'https://github.com/b423016/Memory-Management',
+      delay: 0.25,
+    },
+    {
+      id: 'PRJ-06',
+      status: 'SOLVED',
+      title: 'CSES Solutions',
+      description:
+        'Optimized solutions for the CSES Problem Set — algorithms, data structures, competitive patterns.',
+      tags: ['JAVA', 'C++', 'COMPETITIVE'],
+      githubLink: 'https://github.com/b423016/CSES_SOLN',
+      delay: 0.3,
+    },
+  ];
 
-    return (
-        <section id="projects" className="py-32 px-4 bg-black relative overflow-hidden">
-            {/* Background Technical Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none" />
+  return (
+    <SectionShell id="projects" index={1} className="py-28 sm:py-36 px-4 overflow-hidden">
+      {/* Bridge from hero scroll beam */}
+      <div
+        className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-white/20 to-transparent"
+        aria-hidden="true"
+      />
 
-            <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
+        <Reveal className="mb-16 sm:mb-20 border-b border-white/10 pb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+          <div>
+            <p className="text-steel font-mono text-xs tracking-[0.3em] mb-3 uppercase">Selected work</p>
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight">
+              Deployed <span className="text-gradient">units</span>
+            </h2>
+          </div>
+          <div className="font-mono text-[11px] text-steel-dim text-right">
+            <div>STATUS · ONLINE</div>
+            <div>NODES · {projects.length}</div>
+          </div>
+        </Reveal>
 
-                {/* Section Header */}
-                <div className="flex items-end justify-between mb-20 border-b border-white/10 pb-8">
-                    <div>
-                        <motion.p
-                            initial={{ x: -20, opacity: 0 }}
-                            whileInView={{ x: 0, opacity: 1 }}
-                            className="text-electric-blue font-mono text-sm mb-2 tracking-widest"
-                        >
-                    // ARCHIVE_ACCESS
-                        </motion.p>
-                        <motion.h2
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            whileInView={{ scale: 1, opacity: 1 }}
-                            className="text-4xl md:text-6xl font-black text-white tracking-tighter"
-                        >
-                            DEPLOYED <span className="text-gray-800">UNITS</span>
-                        </motion.h2>
-                    </div>
-                    <div className="hidden md:block text-right">
-                        <div className="text-gray-500 font-mono text-xs">SYS_STATUS: ONLINE</div>
-                        <div className="text-gray-500 font-mono text-xs">NODES: {projects.length}</div>
-                    </div>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          {projects.map((project) => (
+            <ProjectCard key={project.id} {...project} />
+          ))}
+        </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {projects.map((project, index) => (
-                        <ProjectCard key={index} {...project} index={index} />
-                    ))}
-                </div>
-
-                <div className="mt-20 flex justify-center">
-                    <a href="https://github.com/b423016" target="_blank" rel="noopener noreferrer" className="group relative px-8 py-3 bg-transparent border border-electric-blue/30 overflow-hidden rounded-sm hover:border-electric-blue transition-colors">
-                        <div className="absolute inset-0 w-0 bg-electric-blue/10 transition-all duration-[250ms] ease-out group-hover:w-full" />
-                        <span className="relative font-mono text-electric-blue text-sm tracking-widest group-hover:text-white transition-colors">&gt;&gt; VIEW_FULL_REPOSITORY</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-    );
+        <Reveal delay={0.15} className="mt-16 flex justify-center">
+          <a
+            href="https://github.com/b423016"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="hover"
+            className="group relative px-8 py-3 border border-white/15 overflow-hidden rounded-sm hover:border-white/40 transition-colors"
+          >
+            <span className="absolute inset-0 w-0 bg-white/5 transition-all duration-300 group-hover:w-full" />
+            <span className="relative font-mono text-steel-bright text-sm tracking-widest group-hover:text-white transition-colors">
+              &gt;&gt; full_repository
+            </span>
+          </a>
+        </Reveal>
+      </div>
+    </SectionShell>
+  );
 };
 
 export default Projects;

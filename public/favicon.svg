@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Signal mark: A monogram + wave node for WebRTC / systems brand -->
+  <rect width="32" height="32" rx="8" fill="#05070B"/>
+  <path
+    d="M8 22 L12 8 L16 18 L20 8 L24 22"
+    stroke="#E2E8F0"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+  <circle cx="16" cy="22" r="2" fill="#2DD4BF"/>
+  <path
+    d="M6 25 Q16 28 26 25"
+    stroke="#2DD4BF"
+    stroke-width="1.25"
+    stroke-linecap="round"
+    opacity="0.85"
+    fill="none"
+  />
+</svg>
