@@ -214,7 +214,7 @@ const Experience = () => {
                             <h3 className="font-mono text-sm tracking-widest">EDUCATION</h3>
                         </div>
                         <p className="text-steel-bright font-bold text-lg mb-1">IIIT Bhubaneswar</p>
-                        <p className="text-steel text-sm mb-2">B.Tech Information Technology · GPA 8.53/10.0</p>
+                        <p className="text-steel text-sm mb-2">B.Tech Information Technology · CGPA 8.56/10.0</p>
                         <p className="font-mono text-xs text-steel-dim">Aug 2023 – May 2027 · Bhubaneswar, Odisha</p>
                         <p className="mt-4 text-xs text-steel-dim font-mono">
                             Placement Coordinator · Team Lead (NF3-Pro) · Intern Mentor @ Xalen
