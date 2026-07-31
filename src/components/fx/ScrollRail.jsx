@@ -33,9 +33,9 @@ export default function ScrollRail() {
       className="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 flex-col items-center gap-0 h-[55vh]"
       aria-hidden="true"
     >
-      <div className="relative w-px flex-1 bg-white/10 overflow-hidden">
+      <div className="relative w-px flex-1 bg-lift/10 overflow-hidden">
         <motion.div
-          className="absolute top-0 left-0 w-full origin-top bg-gradient-to-b from-white via-steel to-white/40"
+          className="absolute top-0 left-0 w-full origin-top bg-gradient-to-b from-lift via-steel to-lift/40"
           style={{ scaleY, height: '100%' }}
         />
       </div>
@@ -54,13 +54,13 @@ export default function ScrollRail() {
               <span
                 className={`block w-2 h-2 rounded-full border transition-all duration-300 ${
                   isActive
-                    ? 'bg-white border-white scale-125 shadow-[0_0_12px_rgba(255,255,255,0.5)]'
-                    : 'bg-void border-white/30 group-hover:border-white/70'
+                    ? 'bg-lift border-lift scale-125 shadow-[0_0_12px_rgba(var(--accent-rgb),0.35)]'
+                    : 'bg-void border-lift/30 group-hover:border-lift/70'
                 }`}
               />
               <span
                 className={`absolute left-4 font-mono text-[9px] tracking-widest uppercase whitespace-nowrap transition-all duration-300 ${
-                  isActive ? 'opacity-100 text-white translate-x-0' : 'opacity-0 -translate-x-1 text-steel group-hover:opacity-60'
+                  isActive ? 'opacity-100 text-steel-bright translate-x-0' : 'opacity-0 -translate-x-1 text-steel group-hover:opacity-60'
                 }`}
               >
                 {id}

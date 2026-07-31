@@ -35,10 +35,17 @@ export default function SignalField() {
     const CYAN = () => theme.packet2;
     const EMERALD = () => theme.packet3;
     const SKY = () => theme.accentRgb;
-    const MUTED = () => {
-      // derive muted from slate-ish fallback
-      return [100, 116, 139];
+    const hexToRgb = (hex) => {
+      const h = (hex || '').replace('#', '').trim();
+      if (h.length < 6) return [100, 116, 139];
+      return [
+        parseInt(h.slice(0, 2), 16) || 100,
+        parseInt(h.slice(2, 4), 16) || 116,
+        parseInt(h.slice(4, 6), 16) || 139,
+      ];
     };
+    const MUTED = () => hexToRgb(theme.muted);
+    const SHADOW = () => hexToRgb(theme.text);
 
     const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
 
@@ -136,8 +143,8 @@ export default function SignalField() {
       const pw = pkt.size * 1.8;
       const ph = pkt.size * 0.75;
 
-      // shadow
-      ctx.fillStyle = 'rgba(0,0,0,0.25)';
+      // shadow (theme-aware — ink on paper, black on dark)
+      ctx.fillStyle = rgba(SHADOW(), 0.18);
       ctx.fillRect(-pw / 2 + 1, -ph / 2 + 1, pw, ph);
 
       // body by kind
@@ -198,7 +205,7 @@ export default function SignalField() {
       const wash = ctx.createRadialGradient(w * 0.5, h * 0.4, 0, w * 0.5, h * 0.5, Math.max(w, h) * 0.7);
       wash.addColorStop(0, `rgba(${ar[0]},${ar[1]},${ar[2]},0.05)`);
       wash.addColorStop(0.5, `rgba(${ar[0]},${ar[1]},${ar[2]},0.03)`);
-      wash.addColorStop(1, 'rgba(0,0,0,0)');
+      wash.addColorStop(1, 'rgba(0,0,0,0)'); // transparent end
       ctx.fillStyle = wash;
       ctx.fillRect(0, 0, w, h);
 
@@ -467,7 +474,10 @@ export default function SignalField() {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[1] overflow-hidden" aria-hidden="true">
+    <div
+      className="signal-field pointer-events-none fixed inset-0 z-[1] overflow-hidden"
+      aria-hidden="true"
+    >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
       <div className="absolute inset-0 bg-void/55" />
       <div className="absolute inset-0 bg-gradient-to-b from-void/45 via-void/25 to-void/60" />

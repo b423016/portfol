@@ -56,8 +56,8 @@ const Navigation = () => {
           transition={{ duration: 0.7, type: 'spring', bounce: 0.35 }}
           className={`flex items-center justify-between gap-2 px-2 py-2 rounded-2xl border transition-all duration-300 ${
             scrolled
-              ? 'bg-void/85 backdrop-blur-2xl border-white/12 shadow-[0_8px_32px_rgba(0,0,0,0.45)]'
-              : 'bg-black/50 backdrop-blur-xl border-white/10'
+              ? 'bg-void/85 backdrop-blur-2xl border-lift/12 shadow-card'
+              : 'bg-panel/90 backdrop-blur-xl border-lift/10'
           }`}
           aria-label="Primary"
         >
@@ -67,9 +67,9 @@ const Navigation = () => {
               e.preventDefault();
               scrollToSection('home');
             }}
-            className="hidden sm:flex items-center gap-2 pl-3 pr-2 font-display font-bold text-sm tracking-tight text-white"
+            className="hidden sm:flex items-center gap-2 pl-3 pr-2 font-display font-bold text-sm tracking-tight text-steel-bright"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-white/80" />
+            <span className="w-1.5 h-1.5 rounded-full bg-lift/80" />
             ayushjha
             <span className="text-steel">.online</span>
           </a>
@@ -85,13 +85,13 @@ const Navigation = () => {
                   aria-label={item.label}
                   aria-current={isActive ? 'true' : undefined}
                   className={`relative px-3 py-2 rounded-xl text-xs font-mono tracking-wide transition-colors ${
-                    isActive ? 'text-white' : 'text-steel hover:text-white/90'
+                    isActive ? 'text-steel-bright' : 'text-steel hover:text-steel-bright/90'
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 rounded-xl bg-white/[0.08] border border-white/15"
+                      className="absolute inset-0 rounded-xl bg-lift/[0.08] border border-lift/15"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -106,7 +106,7 @@ const Navigation = () => {
 
           <button
             type="button"
-            className="md:hidden p-2.5 rounded-xl text-steel hover:text-white border border-transparent hover:border-white/10"
+            className="md:hidden p-2.5 rounded-xl text-steel hover:text-steel-bright border border-transparent hover:border-lift/10"
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? 'Close menu' : 'Open menu'}
           >
@@ -118,7 +118,7 @@ const Navigation = () => {
               href="https://github.com/b423016"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-xl text-steel hover:text-white hover:bg-white/5 transition-colors"
+              className="p-2.5 rounded-xl text-steel hover:text-steel-bright hover:bg-lift/5 transition-colors"
               aria-label="GitHub"
             >
               <FiGithub size={16} />
@@ -127,7 +127,7 @@ const Navigation = () => {
               href="https://linkedin.com/in/ayush-jha-196470287"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-xl text-steel hover:text-white hover:bg-white/5 transition-colors"
+              className="p-2.5 rounded-xl text-steel hover:text-steel-bright hover:bg-lift/5 transition-colors"
               aria-label="LinkedIn"
             >
               <FiLinkedin size={16} />
@@ -142,7 +142,7 @@ const Navigation = () => {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            className="fixed top-20 left-4 right-4 z-50 md:hidden glass-panel rounded-2xl p-3 border-white/10 shadow-lg"
+            className="fixed top-20 left-4 right-4 z-50 md:hidden glass-panel rounded-2xl p-3 border-lift/10 shadow-lg"
           >
             {navItems.map((item) => (
               <button
@@ -150,7 +150,7 @@ const Navigation = () => {
                 type="button"
                 onClick={() => scrollToSection(item.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-mono ${
-                  activeTab === item.id ? 'text-white bg-white/10' : 'text-steel hover:text-white'
+                  activeTab === item.id ? 'text-steel-bright bg-lift/10' : 'text-steel hover:text-steel-bright'
                 }`}
               >
                 {item.icon}

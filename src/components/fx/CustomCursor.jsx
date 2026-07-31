@@ -45,7 +45,7 @@ export default function CustomCursor() {
         style={{ x: sx, y: sy, translateX: '-50%', translateY: '-50%' }}
       >
         <motion.div
-          className="rounded-full border border-white bg-white/10"
+          className="rounded-full border border-lift bg-lift/10"
           animate={{
             width: hovering ? 48 : 14,
             height: hovering ? 48 : 14,

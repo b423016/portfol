@@ -24,7 +24,7 @@ const GlitchText = ({ text }) => (
     <span className="relative z-10">{text}</span>
     <span
       aria-hidden="true"
-      className="absolute inset-0 text-white/50 opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] transition-all duration-150 blur-[0.5px]"
+      className="absolute inset-0 text-steel-bright/50 opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] transition-all duration-150 blur-[0.5px]"
     >
       {text}
     </span>
@@ -61,7 +61,7 @@ export default function Hero() {
       {/* Soft ambient only — 3D lives in its own stage, not under the terminal */}
       <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" aria-hidden="true" />
       <div
-        className="absolute top-1/4 right-0 w-[50vw] h-[50vh] bg-white/[0.03] blur-[100px] rounded-full pointer-events-none"
+        className="absolute top-1/4 right-0 w-[50vw] h-[50vh] bg-lift/[0.03] blur-[100px] rounded-full pointer-events-none"
         aria-hidden="true"
       />
 
@@ -83,9 +83,9 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/5 mb-6"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-lift/15 bg-lift/5 mb-6"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-lift animate-pulse" />
               <span className="font-mono text-[11px] tracking-widest text-steel-bright uppercase">
                 Open to work · India
               </span>
@@ -106,7 +106,7 @@ export default function Hero() {
               transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="font-display font-extrabold text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[0.95] mb-5"
             >
-              <span className="text-white">
+              <span className="text-steel-bright">
                 <GlitchText text="Ayush" />
               </span>{' '}
               <span className="text-gradient">
@@ -153,7 +153,7 @@ export default function Hero() {
                 <a
                   href="#projects"
                   data-cursor="hover"
-                  className="group relative inline-flex items-center gap-2 px-6 py-3 bg-white text-void font-display font-bold text-sm tracking-wide rounded-sm overflow-hidden"
+                  className="group relative inline-flex items-center gap-2 px-6 py-3 bg-steel-bright text-void font-display font-bold text-sm tracking-wide rounded-sm overflow-hidden"
                 >
                   <span className="relative z-10">View work</span>
                   <FiArrowDown className="relative z-10 group-hover:translate-y-0.5 transition-transform" />
@@ -166,7 +166,7 @@ export default function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   data-cursor="hover"
-                  className="inline-flex items-center gap-2 px-5 py-3 border border-white/15 hover:border-white/40 text-sm font-mono text-steel-bright hover:text-white transition-colors rounded-sm glass-panel"
+                  className="inline-flex items-center gap-2 px-5 py-3 border border-lift/15 hover:border-lift/40 text-sm font-mono text-steel-bright hover:text-steel-bright transition-colors rounded-sm glass-panel"
                 >
                   <FiLinkedin /> Connect
                 </a>
@@ -177,7 +177,7 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="hover"
-                className="inline-flex items-center gap-2 p-3 text-steel hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 p-3 text-steel hover:text-steel-bright transition-colors"
                 aria-label="GitHub"
               >
                 <FiGithub size={20} />
@@ -199,7 +199,7 @@ export default function Hero() {
                   className="px-3 py-2 glass-panel rounded-lg"
                 >
                   <div className="font-mono text-[10px] text-steel-dim tracking-wider uppercase">{p.label}</div>
-                  <div className="font-display font-bold text-white text-sm">{p.value}</div>
+                  <div className="font-display font-bold text-steel-bright text-sm">{p.value}</div>
                 </motion.div>
               ))}
             </motion.div>
@@ -213,8 +213,8 @@ export default function Hero() {
             style={{ y: stageY, rotateZ: stageRotate, scale: stageScale }}
             className="lg:col-span-7 relative h-[320px] sm:h-[380px] lg:h-[460px] will-change-transform"
           >
-            <div className="absolute -inset-4 bg-white/[0.03] blur-3xl rounded-full pointer-events-none" />
-            <div className="relative h-full rounded-2xl overflow-hidden border border-white/12 bg-black/40 shadow-[0_25px_80px_rgba(0,0,0,0.5)]">
+            <div className="absolute -inset-4 bg-lift/[0.03] blur-3xl rounded-full pointer-events-none" />
+            <div className="relative h-full rounded-2xl overflow-hidden border border-lift/12 bg-panel/80 shadow-card-lg">
 
               {!reduced ? (
                 <Suspense
@@ -248,27 +248,27 @@ export default function Hero() {
             transition={{ type: 'spring', stiffness: 140, damping: 18 }}
           >
             <div
-              className="absolute inset-0 rounded-2xl bg-white/5 border border-white/10"
+              className="absolute inset-0 rounded-2xl bg-lift/5 border border-lift/10"
               style={{ transform: 'translateZ(-20px) scale(1.02)' }}
               aria-hidden="true"
             />
-            <span className="absolute -top-0.5 -left-0.5 w-4 h-4 border-t-2 border-l-2 border-white/35 rounded-tl z-20" />
-            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 border-t-2 border-r-2 border-white/35 rounded-tr z-20" />
-            <span className="absolute -bottom-0.5 -left-0.5 w-4 h-4 border-b-2 border-l-2 border-white/35 rounded-bl z-20" />
-            <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 border-b-2 border-r-2 border-white/35 rounded-br z-20" />
+            <span className="absolute -top-0.5 -left-0.5 w-4 h-4 border-t-2 border-l-2 border-lift/35 rounded-tl z-20" />
+            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 border-t-2 border-r-2 border-lift/35 rounded-tr z-20" />
+            <span className="absolute -bottom-0.5 -left-0.5 w-4 h-4 border-b-2 border-l-2 border-lift/35 rounded-bl z-20" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 border-b-2 border-r-2 border-lift/35 rounded-br z-20" />
 
-            <div className="relative glass-panel rounded-2xl overflow-hidden border border-white/15 shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
-              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-black/50">
+            <div className="relative glass-panel rounded-2xl overflow-hidden border border-lift/15 shadow-card-lg">
+              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-lift/10 bg-panel/90">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
                 <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                <span className="w-2.5 h-2.5 rounded-full bg-white/35" />
+                <span className="w-2.5 h-2.5 rounded-full bg-lift/35" />
                 <span className="ml-2 font-mono text-[11px] text-steel">ayush_profile.exe</span>
-                <span className="ml-auto font-mono text-[10px] text-white/30">SYS · ONLINE</span>
+                <span className="ml-auto font-mono text-[10px] text-steel-bright/30">SYS · ONLINE</span>
               </div>
 
               <div className="p-5 sm:p-6 flex flex-col sm:flex-row gap-5 items-start">
                 <div className="relative shrink-0 mx-auto sm:mx-0">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden border border-white/20">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden border border-lift/20">
                     <img
                       src="/assets/profile.png"
                       alt="Ayush Kumar Jha"
@@ -278,24 +278,24 @@ export default function Hero() {
                       decoding="async"
                     />
                   </div>
-                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-white rounded-full border-2 border-panel" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-lift rounded-full border-2 border-panel" />
                 </div>
 
                 <div className="font-mono text-xs sm:text-sm text-steel leading-relaxed flex-1 min-w-0">
                   <p className="mb-2">
-                    <span className="text-white">➜</span> <span className="text-steel-dim">~</span>{' '}
-                    <span className="text-white/90">whoami</span>
+                    <span className="text-steel-bright">➜</span> <span className="text-steel-dim">~</span>{' '}
+                    <span className="text-steel-bright/90">whoami</span>
                   </p>
-                  <p className="pl-3 border-l border-white/15 space-y-1">
-                    <span className="block text-white">SDE Intern @ Xalen AI</span>
+                  <p className="pl-3 border-l border-lift/15 space-y-1">
+                    <span className="block text-steel-bright">SDE Intern @ Xalen AI</span>
                     <span className="block">Evals: Handshake · Outlier · AirDawg</span>
                     <span className="block text-steel-dim">
                       IIIT BBSR · Meta HC #1154 · LC Knight · CF Specialist
                     </span>
                   </p>
-                  <p className="mt-3 text-white/70">
-                    <span className="text-white">➜</span> stack — rust · fastapi · webrtc · evals{' '}
-                    <span className="animate-pulse text-white">_</span>
+                  <p className="mt-3 text-steel-bright/70">
+                    <span className="text-steel-bright">➜</span> stack — rust · fastapi · webrtc · evals{' '}
+                    <span className="animate-pulse text-steel-bright">_</span>
                   </p>
                 </div>
               </div>
@@ -310,11 +310,11 @@ export default function Hero() {
         aria-hidden="true"
       >
         <motion.div
-          className="w-px bg-gradient-to-b from-white/80 via-white/30 to-transparent origin-top"
+          className="w-px bg-gradient-to-b from-lift/80 via-lift/30 to-transparent origin-top"
           style={{ height: beamHeight, opacity: beamOpacity, minHeight: 48 }}
         />
         <motion.div
-          className="absolute bottom-0 w-32 h-32 rounded-full bg-white/10 blur-3xl"
+          className="absolute bottom-0 w-32 h-32 rounded-full bg-lift/10 blur-3xl"
           style={{ opacity: beamOpacity }}
         />
       </div>
@@ -324,13 +324,13 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-steel-dim hover:text-white transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-steel-dim hover:text-steel-bright transition-colors"
       >
         <span className="font-mono text-[10px] tracking-widest uppercase">Scroll into work</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.6 }}
-          className="w-px h-10 bg-gradient-to-b from-white/60 to-transparent"
+          className="w-px h-10 bg-gradient-to-b from-lift/60 to-transparent"
         />
       </motion.a>
     </section>

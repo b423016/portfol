@@ -30,8 +30,8 @@ function TiltCard({ children, className = '' }) {
     rotY.set(0);
   };
 
-  // Neutral white glow on hover — not permanent teal
-  const glow = useMotionTemplate`radial-gradient(420px circle at ${x}px ${y}px, rgba(255,255,255,0.08), transparent 55%)`;
+  // Theme-aware hover wash (works on Paper light + dark themes)
+  const glow = useMotionTemplate`radial-gradient(420px circle at ${x}px ${y}px, color-mix(in srgb, var(--text) 10%, transparent), transparent 55%)`;
 
   return (
     <motion.div
@@ -67,14 +67,14 @@ const ProjectCard = ({
     transition={{ delay, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
     style={{ perspective: 1000 }}
   >
-    <TiltCard className="h-full rounded-xl border border-white/10 bg-panel/60 overflow-hidden transition-all duration-400 hover:border-white/25 hover:bg-panel/90 hover:shadow-[0_20px_50px_rgba(0,0,0,0.45)]">
+    <TiltCard className="theme-card h-full rounded-xl overflow-hidden transition-all duration-400 hover:border-lift/25 hover:shadow-card">
       <div className="relative z-10 p-6 flex flex-col h-full min-h-[300px]">
-        <div className="flex justify-between items-center mb-5 font-mono text-[10px] tracking-widest text-steel-dim border-b border-white/5 pb-4">
-          <span className="text-steel group-hover:text-white transition-colors">{id}</span>
+        <div className="flex justify-between items-center mb-5 font-mono text-[10px] tracking-widest text-steel-dim border-b border-lift/5 pb-4">
+          <span className="text-steel group-hover:text-steel-bright transition-colors">{id}</span>
           <div className="flex items-center gap-2">
             <span
               className={`w-1.5 h-1.5 rounded-full ${
-                status === 'LIVE' ? 'bg-white' : 'bg-steel-dim'
+                status === 'LIVE' ? 'bg-steel-bright' : 'bg-steel-dim'
               } group-hover:animate-pulse`}
             />
             <span className="text-steel">[{status}]</span>
@@ -82,7 +82,7 @@ const ProjectCard = ({
         </div>
 
         <h3
-          className="text-xl sm:text-2xl font-display font-bold text-white mb-3 group-hover:tracking-tight transition-all duration-300"
+          className="text-xl sm:text-2xl font-display font-bold text-steel-bright mb-3 group-hover:tracking-tight transition-all duration-300"
           style={{ transform: 'translateZ(24px)' }}
         >
           {title}
@@ -93,21 +93,21 @@ const ProjectCard = ({
           {tags.map((tag) => (
             <span
               key={tag}
-              className="px-2 py-1 text-[10px] font-mono border border-white/10 text-steel bg-white/[0.03] rounded group-hover:border-white/20 group-hover:text-steel-bright transition-colors"
+              className="px-2 py-1 text-[10px] font-mono border border-lift/10 text-steel bg-lift/[0.03] rounded group-hover:border-lift/20 group-hover:text-steel-bright transition-colors"
             >
               {tag}
             </span>
           ))}
         </div>
 
-        <div className="flex gap-3 pt-4 border-t border-white/5 mt-auto">
+        <div className="flex gap-3 pt-4 border-t border-lift/5 mt-auto">
           {githubLink && (
             <a
               href={githubLink}
               target="_blank"
               rel="noopener noreferrer"
               data-cursor="hover"
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-white/5 hover:bg-white/10 text-xs font-mono text-steel-bright hover:text-white transition-all rounded border border-transparent hover:border-white/15"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-lift/5 hover:bg-lift/10 text-xs font-mono text-steel-bright hover:text-steel-bright transition-all rounded border border-transparent hover:border-lift/15"
             >
               <FiGithub /> SOURCE
             </a>
@@ -118,7 +118,7 @@ const ProjectCard = ({
               target="_blank"
               rel="noopener noreferrer"
               data-cursor="hover"
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-white/10 hover:bg-white/15 text-xs font-mono text-white border border-white/15 hover:border-white/30 transition-all rounded"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-lift/10 hover:bg-lift/15 text-xs font-mono text-steel-bright border border-lift/15 hover:border-lift/30 transition-all rounded"
             >
               <FiExternalLink /> LIVE
             </a>
@@ -197,15 +197,15 @@ const Projects = () => {
     <SectionShell id="projects" index={1} className="py-28 sm:py-36 px-4 overflow-hidden">
       {/* Bridge from hero scroll beam */}
       <div
-        className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-white/20 to-transparent"
+        className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-lift/20 to-transparent"
         aria-hidden="true"
       />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <Reveal className="mb-16 sm:mb-20 border-b border-white/10 pb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+        <Reveal className="mb-16 sm:mb-20 border-b border-lift/10 pb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
           <div>
             <p className="text-steel font-mono text-xs tracking-[0.3em] mb-3 uppercase">Selected work</p>
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight">
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-steel-bright tracking-tight">
               Deployed <span className="text-gradient">units</span>
             </h2>
           </div>
@@ -227,10 +227,10 @@ const Projects = () => {
             target="_blank"
             rel="noopener noreferrer"
             data-cursor="hover"
-            className="group relative px-8 py-3 border border-white/15 overflow-hidden rounded-sm hover:border-white/40 transition-colors"
+            className="group relative px-8 py-3 border border-lift/15 overflow-hidden rounded-sm hover:border-lift/40 transition-colors"
           >
-            <span className="absolute inset-0 w-0 bg-white/5 transition-all duration-300 group-hover:w-full" />
-            <span className="relative font-mono text-steel-bright text-sm tracking-widest group-hover:text-white transition-colors">
+            <span className="absolute inset-0 w-0 bg-lift/5 transition-all duration-300 group-hover:w-full" />
+            <span className="relative font-mono text-steel-bright text-sm tracking-widest group-hover:text-steel-bright transition-colors">
               &gt;&gt; full_repository
             </span>
           </a>

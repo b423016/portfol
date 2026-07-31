@@ -49,7 +49,7 @@ const Achievements = () => {
                     transition={{ duration: 0.8 }}
                     className="mb-16"
                 >
-                    <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-400 to-gray-800 mb-4 uppercase tracking-tighter">
+                    <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-lift via-gray-400 to-gray-800 mb-4 uppercase tracking-tighter">
                         Achievements <span className="text-electric-blue">_</span>
                     </h2>
                     <div className="h-1 w-24 bg-electric-blue rounded-full shadow-[0_0_15px_#64FFDA]" />
@@ -62,26 +62,26 @@ const Achievements = () => {
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="group relative p-8 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl hover:border-electric-blue/50 transition-colors duration-300"
+                            className="theme-card group relative p-8 rounded-2xl hover:border-electric-blue/50 transition-colors duration-300"
                         >
                             <div className="absolute inset-0 bg-electric-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
 
                             <div className="relative z-10 flex items-start gap-6">
                                 <div
-                                    className={`text-5xl ${item.color} p-4 bg-white/5 rounded-xl border border-white/10 shadow-[0_0_10px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-300`}
+                                    className={`text-5xl ${item.color} p-4 bg-lift/5 rounded-xl border border-lift/10 shadow-card group-hover:scale-110 transition-transform duration-300`}
                                 >
                                     {item.icon}
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl font-bold text-white mb-2 font-mono">{item.title}</h3>
+                                    <h3 className="text-2xl font-bold text-steel-bright mb-2 font-mono">{item.title}</h3>
                                     <div className="text-lg text-electric-blue font-bold tracking-wide mb-3 uppercase text-sm border border-electric-blue/30 px-2 py-1 rounded inline-block bg-electric-blue/10">
                                         {item.rank}
                                     </div>
-                                    <p className="text-gray-400 leading-relaxed font-light mt-2">{item.description}</p>
+                                    <p className="text-steel leading-relaxed font-light mt-2">{item.description}</p>
                                 </div>
                             </div>
 
-                            <div className="absolute top-4 right-4 text-xs font-mono text-gray-600 opacity-50">
+                            <div className="absolute top-4 right-4 text-xs font-mono text-steel-dim opacity-50">
                                 REL_{index + 1}
                             </div>
                         </motion.div>

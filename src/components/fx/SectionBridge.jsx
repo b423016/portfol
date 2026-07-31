@@ -12,7 +12,7 @@ export default function SectionBridge() {
       aria-hidden="true"
     >
       <motion.div
-        className="h-px w-full max-w-xs bg-gradient-to-r from-transparent via-white/15 to-transparent"
+        className="h-px w-full max-w-xs bg-gradient-to-r from-transparent via-lift/15 to-transparent"
         initial={{ scaleX: 0, opacity: 0 }}
         whileInView={{ scaleX: 1, opacity: 1 }}
         viewport={{ once: true, margin: '-10%' }}

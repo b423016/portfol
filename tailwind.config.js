@@ -7,24 +7,28 @@ export default {
   theme: {
     extend: {
       colors: {
-        void: 'var(--void)',
-        panel: 'var(--panel)',
-        surface: 'var(--surface)',
+        /* color-mix keeps opacity modifiers valid with hex CSS vars */
+        void: 'color-mix(in srgb, var(--void) calc(<alpha-value> * 100%), transparent)',
+        panel: 'color-mix(in srgb, var(--panel) calc(<alpha-value> * 100%), transparent)',
+        surface: 'color-mix(in srgb, var(--surface) calc(<alpha-value> * 100%), transparent)',
         steel: {
-          DEFAULT: 'var(--muted)',
-          dim: 'var(--muted-dim)',
-          bright: 'var(--text)',
+          DEFAULT: 'color-mix(in srgb, var(--muted) calc(<alpha-value> * 100%), transparent)',
+          dim: 'color-mix(in srgb, var(--muted-dim) calc(<alpha-value> * 100%), transparent)',
+          bright: 'color-mix(in srgb, var(--text) calc(<alpha-value> * 100%), transparent)',
         },
         signal: {
-          DEFAULT: 'var(--accent)',
-          dim: 'var(--accent-dim)',
-          glow: 'var(--accent-glow)',
+          DEFAULT: 'color-mix(in srgb, var(--accent) calc(<alpha-value> * 100%), transparent)',
+          dim: 'color-mix(in srgb, var(--accent-dim) calc(<alpha-value> * 100%), transparent)',
+          glow: 'color-mix(in srgb, var(--accent-glow) calc(<alpha-value> * 100%), transparent)',
         },
-        line: 'var(--line)',
+        line: 'color-mix(in srgb, var(--line) calc(<alpha-value> * 100%), transparent)',
+        /* Theme-aware overlays: white/black on dark, ink/white on Paper */
+        lift: 'rgb(var(--lift) / <alpha-value>)',
+        shade: 'rgb(var(--shade) / <alpha-value>)',
         amber: {
           live: '#F59E0B',
         },
-        'electric-blue': 'var(--accent)',
+        'electric-blue': 'color-mix(in srgb, var(--accent) calc(<alpha-value> * 100%), transparent)',
       },
       fontFamily: {
         display: ['"Syne"', 'system-ui', 'sans-serif'],

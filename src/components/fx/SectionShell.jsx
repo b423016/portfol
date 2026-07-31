@@ -30,12 +30,12 @@ export default function SectionShell({
     >
       {/* Shared section connector label */}
       <div className="pointer-events-none absolute left-0 right-0 top-0 flex justify-center overflow-hidden" aria-hidden="true">
-        <div className="h-px w-full max-w-6xl bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="h-px w-full max-w-6xl bg-gradient-to-r from-transparent via-lift/10 to-transparent" />
       </div>
 
       {/* Subtle index watermark — continuity across sections */}
       <span
-        className="pointer-events-none absolute right-4 md:right-10 top-16 font-mono text-[10px] tracking-[0.4em] text-white/10 uppercase select-none"
+        className="pointer-events-none absolute right-4 md:right-10 top-16 font-mono text-[10px] tracking-[0.4em] text-steel-bright/10 uppercase select-none"
         aria-hidden="true"
       >
         {String(index).padStart(2, '0')} // SYS

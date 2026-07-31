@@ -32,7 +32,7 @@ const DecryptText = ({ text, className }) => {
 
 const Contact = () => {
     return (
-        <SectionShell id="contact" index={5} className="min-h-screen text-white relative overflow-hidden flex flex-col justify-between py-20 px-4">
+        <SectionShell id="contact" index={5} className="min-h-screen text-steel-bright relative overflow-hidden flex flex-col justify-between py-20 px-4">
             {/* Background Static Noise */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
 
@@ -55,17 +55,17 @@ const Contact = () => {
                             <span className="text-signal">&gt;</span> open to work · ayushjha.online
                         </p>
 
-                        <div className="font-mono space-y-6 text-gray-500 mb-12">
+                        <div className="font-mono space-y-6 text-steel-dim mb-12">
                             <div>
-                                <span className="block text-xs text-gray-600 mb-1 tracking-widest uppercase">Target Coordinates (Email)</span>
+                                <span className="block text-xs text-steel-dim mb-1 tracking-widest uppercase">Target Coordinates (Email)</span>
                                 <a href="mailto:ayushjha4277@gmail.com" className="hover:text-electric-blue transition-colors">
-                                    <DecryptText text="ayushjha4277@gmail.com" className="text-lg text-white" />
+                                    <DecryptText text="ayushjha4277@gmail.com" className="text-lg text-steel-bright" />
                                 </a>
                             </div>
                             <div>
-                                <span className="block text-xs text-gray-600 mb-1 tracking-widest uppercase">Comms Frequency (Phone)</span>
+                                <span className="block text-xs text-steel-dim mb-1 tracking-widest uppercase">Comms Frequency (Phone)</span>
                                 <a href="tel:+919155388390" className="hover:text-electric-blue transition-colors">
-                                    <DecryptText text="(+91) 9155388390" className="text-lg text-white" />
+                                    <DecryptText text="(+91) 9155388390" className="text-lg text-steel-bright" />
                                 </a>
                             </div>
                         </div>
@@ -88,7 +88,7 @@ const Contact = () => {
                             <div className="absolute inset-0 rounded-full bg-electric-blue/10 blur-xl group-hover:bg-electric-blue/20 transition-colors duration-500" />
 
                             <div className="relative z-10 text-center">
-                                <span className="block text-2xl font-bold text-white group-hover:text-electric-blue transition-colors">INIT</span>
+                                <span className="block text-2xl font-bold text-steel-bright group-hover:text-electric-blue transition-colors">INIT</span>
                                 <span className="text-xs font-mono text-electric-blue tracking-widest">CONNECTION</span>
                             </div>
                         </motion.a>
@@ -97,11 +97,11 @@ const Contact = () => {
             </div>
 
             {/* Footer: System Status */}
-            <div className="max-w-6xl mx-auto w-full border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-gray-600 relative z-10">
+            <div className="max-w-6xl mx-auto w-full border-t border-lift/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-steel-dim relative z-10">
                 <div className="flex gap-6">
-                    <a href="https://github.com/b423016" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GITHUB</a>
-                    <a href="https://linkedin.com/in/ayush-jha-196470287" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LINKEDIN</a>
-                    <a href="mailto:ayushjha4277@gmail.com" className="hover:text-white transition-colors">EMAIL</a>
+                    <a href="https://github.com/b423016" target="_blank" rel="noopener noreferrer" className="hover:text-steel-bright transition-colors">GITHUB</a>
+                    <a href="https://linkedin.com/in/ayush-jha-196470287" target="_blank" rel="noopener noreferrer" className="hover:text-steel-bright transition-colors">LINKEDIN</a>
+                    <a href="mailto:ayushjha4277@gmail.com" className="hover:text-steel-bright transition-colors">EMAIL</a>
                 </div>
                 <div>
                     SYSTEM_ID: PORTFOLIO_V2 // © 2026 AYUSH KUMAR JHA

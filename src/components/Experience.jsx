@@ -90,7 +90,7 @@ const Experience = () => {
     return (
         <SectionShell id="experience" index={2} className="py-28 sm:py-36 px-4 overflow-hidden">
             <div className="max-w-6xl mx-auto relative z-10">
-                <div className="mb-16 border-b border-white/10 pb-8">
+                <div className="mb-16 border-b border-lift/10 pb-8">
                     <motion.p
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -101,11 +101,11 @@ const Experience = () => {
                     <motion.h2
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="font-display text-4xl md:text-6xl font-extrabold text-white tracking-tight"
+                        className="font-display text-4xl md:text-6xl font-extrabold text-steel-bright tracking-tight"
                     >
                         Experience <span className="text-gradient">&amp; research</span>
                     </motion.h2>
-                    <p className="mt-4 text-gray-500 font-mono text-sm max-w-3xl leading-relaxed">
+                    <p className="mt-4 text-steel-dim font-mono text-sm max-w-3xl leading-relaxed">
                         IIIT BBSR · Knight @ LeetCode · Meta Hacker Cup #1154 · Specialist @ CF · Placement Coordinator
                     </p>
                 </div>
@@ -114,18 +114,18 @@ const Experience = () => {
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-10 p-5 md:p-6 border border-electric-blue/25 bg-electric-blue/5 rounded-xl flex flex-col md:flex-row md:items-center gap-4"
+                    className="theme-card mb-10 p-5 md:p-6 border-electric-blue/30 rounded-xl flex flex-col md:flex-row md:items-center gap-4"
                 >
                     <div className="w-12 h-12 rounded-lg bg-electric-blue/15 border border-electric-blue/40 flex items-center justify-center text-electric-blue shrink-0">
                         <FiCpu size={22} />
                     </div>
                     <div className="flex-1">
                         <p className="font-mono text-xs text-electric-blue tracking-widest mb-1">AI_EVALS_STACK</p>
-                        <p className="text-white text-sm md:text-base leading-relaxed">
+                        <p className="text-steel-bright text-sm md:text-base leading-relaxed">
                             Professional AI evaluation across{' '}
                             <span className="text-electric-blue font-semibold">Handshake AI</span> (current),{' '}
-                            <span className="text-white font-semibold">Outlier / Scale AI</span> (Mar–Jun 2026), and{' '}
-                            <span className="text-white font-semibold">AirDawg Labs</span> (Jan–Mar 2026 — terminal
+                            <span className="text-steel-bright font-semibold">Outlier / Scale AI</span> (Mar–Jun 2026), and{' '}
+                            <span className="text-steel-bright font-semibold">AirDawg Labs</span> (Jan–Mar 2026 — terminal
                             benchmarking &amp; AI evals).
                         </p>
                     </div>
@@ -133,7 +133,7 @@ const Experience = () => {
                         {['Handshake', 'Outlier', 'AirDawg'].map((p) => (
                             <span
                                 key={p}
-                                className="px-3 py-1 text-[10px] font-mono tracking-wider border border-electric-blue/30 text-electric-blue bg-black/40 rounded"
+                                className="px-3 py-1 text-[10px] font-mono tracking-wider border border-electric-blue/30 text-electric-blue bg-surface rounded"
                             >
                                 {p}
                             </span>
@@ -149,8 +149,8 @@ const Experience = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: Math.min(index * 0.06, 0.3) }}
-                            className={`group relative border bg-black/40 backdrop-blur-sm rounded-xl p-6 md:p-8 hover:border-electric-blue/40 transition-colors ${
-                                job.current ? 'border-electric-blue/30' : 'border-white/10'
+                            className={`theme-card group relative rounded-xl p-6 md:p-8 hover:border-electric-blue/40 transition-colors ${
+                                job.current ? 'border-electric-blue/35' : ''
                             }`}
                         >
                             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
@@ -160,11 +160,11 @@ const Experience = () => {
                                     </div>
                                     <div>
                                         <div className="flex flex-wrap items-center gap-2 mb-1">
-                                            <h3 className="text-xl md:text-2xl font-bold text-white font-mono">
+                                            <h3 className="text-xl md:text-2xl font-bold text-steel-bright font-mono">
                                                 {job.role}
                                             </h3>
                                             {job.current && (
-                                                <span className="px-2 py-0.5 text-[10px] font-mono tracking-widest text-green-400 border border-green-500/40 bg-green-500/10 rounded">
+                                                <span className="px-2 py-0.5 text-[10px] font-mono tracking-widest text-emerald-700 border border-emerald-600/35 bg-emerald-500/10 rounded">
                                                     ACTIVE
                                                 </span>
                                             )}
@@ -174,14 +174,14 @@ const Experience = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <span className="font-mono text-xs text-gray-500 border border-white/10 px-3 py-1 rounded self-start">
+                                <span className="font-mono text-xs text-steel-dim border border-line px-3 py-1 rounded self-start bg-surface/80">
                                     {job.period}
                                 </span>
                             </div>
 
                             <ul className="space-y-3 mb-6">
                                 {job.points.map((point, i) => (
-                                    <li key={i} className="flex gap-3 text-gray-400 text-sm leading-relaxed">
+                                    <li key={i} className="flex gap-3 text-steel text-sm leading-relaxed">
                                         <span className="text-electric-blue font-mono shrink-0 mt-0.5">&gt;</span>
                                         <span>{point}</span>
                                     </li>
@@ -192,7 +192,7 @@ const Experience = () => {
                                 {job.tags.map((tag) => (
                                     <span
                                         key={tag}
-                                        className="px-2 py-1 text-[10px] font-mono border border-white/10 text-gray-400 bg-white/5 rounded"
+                                        className="px-2 py-1 text-[10px] font-mono border border-line text-steel bg-surface rounded"
                                     >
                                         {tag}
                                     </span>
@@ -207,16 +207,16 @@ const Experience = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="border border-white/10 bg-black/40 rounded-xl p-6 hover:border-electric-blue/30 transition-colors"
+                        className="theme-card rounded-xl p-6 hover:border-electric-blue/30 transition-colors"
                     >
                         <div className="flex items-center gap-3 mb-4 text-electric-blue">
                             <FiBookOpen size={20} />
                             <h3 className="font-mono text-sm tracking-widest">EDUCATION</h3>
                         </div>
-                        <p className="text-white font-bold text-lg mb-1">IIIT Bhubaneswar</p>
-                        <p className="text-gray-400 text-sm mb-2">B.Tech Information Technology · GPA 8.53/10.0</p>
-                        <p className="font-mono text-xs text-gray-500">Aug 2023 – May 2027 · Bhubaneswar, Odisha</p>
-                        <p className="mt-4 text-xs text-gray-500 font-mono">
+                        <p className="text-steel-bright font-bold text-lg mb-1">IIIT Bhubaneswar</p>
+                        <p className="text-steel text-sm mb-2">B.Tech Information Technology · GPA 8.53/10.0</p>
+                        <p className="font-mono text-xs text-steel-dim">Aug 2023 – May 2027 · Bhubaneswar, Odisha</p>
+                        <p className="mt-4 text-xs text-steel-dim font-mono">
                             Placement Coordinator · Team Lead (NF3-Pro) · Intern Mentor @ Xalen
                         </p>
                     </motion.div>
@@ -226,16 +226,16 @@ const Experience = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="border border-electric-blue/20 bg-electric-blue/5 rounded-xl p-6 hover:border-electric-blue/40 transition-colors"
+                        className="theme-card rounded-xl p-6 border-electric-blue/25 hover:border-electric-blue/40 transition-colors"
                     >
                         <div className="flex items-center gap-3 mb-4 text-electric-blue">
                             <FiExternalLink size={20} />
                             <h3 className="font-mono text-sm tracking-widest">PUBLICATION</h3>
                         </div>
-                        <p className="text-white font-bold text-lg mb-2 leading-snug">
+                        <p className="text-steel-bright font-bold text-lg mb-2 leading-snug">
                             Do Large Language Models Fail on Competitive Programming?
                         </p>
-                        <p className="text-gray-400 text-sm mb-4 leading-relaxed">
+                        <p className="text-steel text-sm mb-4 leading-relaxed">
                             First-authored empirical study on 315 Codeforces problems — Chain-of-Thought prompting degrades
                             LLM performance on greedy algorithms via constraint hallucinations.
                         </p>

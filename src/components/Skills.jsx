@@ -16,16 +16,16 @@ const HUDCard = ({ title, subtitle, icons, colSpan = 'col-span-1', delay }) => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay, duration: 0.5 }}
-        className={`${colSpan} group relative bg-black/40 border border-white/10 p-6 rounded-lg overflow-hidden backdrop-blur-md hover:border-electric-blue/50 transition-colors duration-300 min-h-[260px] flex flex-col`}
+        className={`${colSpan} theme-card group relative p-6 rounded-lg overflow-hidden hover:border-electric-blue/50 transition-colors duration-300 min-h-[260px] flex flex-col`}
     >
-        <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-white/20 group-hover:border-electric-blue transition-colors" />
-        <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-white/20 group-hover:border-electric-blue transition-colors" />
-        <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-white/20 group-hover:border-electric-blue transition-colors" />
-        <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-white/20 group-hover:border-electric-blue transition-colors" />
+        <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-lift/20 group-hover:border-electric-blue transition-colors" />
+        <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-lift/20 group-hover:border-electric-blue transition-colors" />
+        <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-lift/20 group-hover:border-electric-blue transition-colors" />
+        <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-lift/20 group-hover:border-electric-blue transition-colors" />
 
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-electric-blue/5 to-transparent h-[20%] w-full -translate-y-full group-hover:animate-[scan_2s_linear_infinite] pointer-events-none" />
 
-        <div className="flex justify-between items-center mb-6 font-mono text-[10px] text-gray-500 tracking-widest uppercase">
+        <div className="flex justify-between items-center mb-6 font-mono text-[10px] text-steel-dim tracking-widest uppercase">
             <span>SYS_MODULE: {title.split(' ')[0]}</span>
             <span className="group-hover:text-electric-blue transition-colors group-hover:animate-pulse">
                 <span className="hidden group-hover:inline">&gt;&gt; SYSTEM_ACTIVE</span>
@@ -36,7 +36,7 @@ const HUDCard = ({ title, subtitle, icons, colSpan = 'col-span-1', delay }) => (
         <div className="flex flex-wrap gap-4 mb-auto relative z-10">
             {icons.map((icon, idx) => (
                 <div key={idx} className="relative group/icon">
-                    <div className="w-12 h-12 rounded bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 relative z-10 group-hover/icon:border-white/30 group-hover/icon:bg-white/10">
+                    <div className="w-12 h-12 rounded bg-lift/5 border border-lift/10 flex items-center justify-center transition-all duration-300 relative z-10 group-hover/icon:border-lift/30 group-hover/icon:bg-lift/10">
                         {icon}
                     </div>
                     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-current blur-xl opacity-0 group-hover/icon:opacity-40 transition-opacity duration-300" />
@@ -44,9 +44,9 @@ const HUDCard = ({ title, subtitle, icons, colSpan = 'col-span-1', delay }) => (
             ))}
         </div>
 
-        <div className="mt-6 border-t border-white/5 pt-4">
-            <h3 className="text-lg font-bold text-white mb-1 font-mono tracking-tight">{title}</h3>
-            <p className="text-xs text-gray-400 font-mono leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">
+        <div className="mt-6 border-t border-lift/5 pt-4">
+            <h3 className="text-lg font-bold text-steel-bright mb-1 font-mono tracking-tight">{title}</h3>
+            <p className="text-xs text-steel font-mono leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">
                 {subtitle}
             </p>
         </div>
@@ -65,7 +65,7 @@ const Skills = () => {
                     >
                         Skill matrix
                     </motion.div>
-                    <h2 className="font-display text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-4">
+                    <h2 className="font-display text-4xl md:text-6xl font-extrabold text-steel-bright tracking-tight mb-4">
                         Technical <span className="text-gradient">arsenal</span>
                     </h2>
                 </div>
@@ -93,7 +93,7 @@ const Skills = () => {
                         icons={[
                             <SiFastapi size={24} className="text-teal-400" key="fa" />,
                             <TbServer size={24} className="text-blue-400" key="srv" />,
-                            <SiNextdotjs size={24} className="text-white" key="next" />,
+                            <SiNextdotjs size={24} className="text-steel-bright" key="next" />,
                             <TbNetwork size={24} className="text-electric-blue" key="rtc" />,
                         ]}
                         delay={0.2}
@@ -125,7 +125,7 @@ const Skills = () => {
                             <FaJava size={24} className="text-red-400" key="java" />,
                             <SiTypescript size={24} className="text-blue-400" key="ts" />,
                             <TbBrandCpp size={24} className="text-blue-600" key="cpp" />,
-                            <FaDatabase size={24} className="text-gray-300" key="sql" />,
+                            <FaDatabase size={24} className="text-steel" key="sql" />,
                             <FaLinux size={24} className="text-yellow-600" key="linux" />,
                             <FaGitAlt size={24} className="text-orange-600" key="git" />,
                         ]}
@@ -147,7 +147,7 @@ const Skills = () => {
                                 (tag) => (
                                     <span
                                         key={tag}
-                                        className="px-2 py-1 bg-black/50 border border-electric-blue/30 text-[10px] text-gray-300 font-mono rounded"
+                                        className="px-2 py-1 bg-panel/90 border border-electric-blue/30 text-[10px] text-steel font-mono rounded"
                                     >
                                         {tag}
                                     </span>

@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 /* ========== THEME TOKENS ========== */
+/*
+ * --lift  = foreground overlays (borders, soft fills) — white on dark, ink on light
+ * --shade = background overlays (glass panels) — black on dark, white on light
+ * Space-separated RGB for Tailwind opacity: bg-lift/10, border-shade/40
+ */
+:root {
+  --lift: 255 255 255;
+  --shade: 0 0 0;
+  --shadow-rgb: 0, 0, 0;
+}
+
 /* Default / FOUC = Warm (studio charcoal + copper) */
 :root,
 [data-theme="warm"] {
@@ -24,6 +35,9 @@
   --packet-3: 201, 139, 98;
   --ring: #e8a87c;
   --ring-emissive: #c98b62;
+  --lift: 255 255 255;
+  --shade: 0 0 0;
+  --shadow-rgb: 0, 0, 0;
 }
 
 /* Signal — cyber teal */
@@ -114,26 +128,31 @@
   --ring-emissive: #0ea5e9;
 }
 
-/* Paper — light editorial cream + ink */
+/* Paper — light editorial cream + ink (full light mode) */
 [data-theme="paper"] {
-  --void: #f4f0e8;
-  --panel: #ebe6dc;
-  --surface: #e2dcd0;
-  --text: #1c1916;
-  --muted: #6b635a;
-  --muted-dim: #8a8278;
-  --line: #d4cdc0;
-  --accent: #9a6b3f;
-  --accent-dim: #7a5330;
-  --accent-glow: #c4925e;
-  --accent-rgb: 154, 107, 63;
-  --wash: rgba(154, 107, 63, 0.1);
-  --wash-2: rgba(154, 107, 63, 0.04);
-  --packet-1: 28, 25, 22;
-  --packet-2: 154, 107, 63;
-  --packet-3: 122, 83, 48;
-  --ring: #9a6b3f;
-  --ring-emissive: #7a5330;
+  --void: #f5f1e8;
+  --panel: #fffcf7; /* solid warm paper — not grey glass */
+  --surface: #efe8db;
+  --text: #141210; /* near-black ink */
+  --muted: #4a443c; /* readable secondary */
+  --muted-dim: #6e665c;
+  --line: #d9d0c2;
+  --accent: #8a582c;
+  --accent-dim: #6a4220;
+  --accent-glow: #b07a42;
+  --accent-rgb: 138, 88, 44;
+  --wash: rgba(138, 88, 44, 0.1);
+  --wash-2: rgba(138, 88, 44, 0.04);
+  --packet-1: 20, 18, 16;
+  --packet-2: 138, 88, 44;
+  --packet-3: 106, 66, 32;
+  --ring: #8a582c;
+  --ring-emissive: #6a4220;
+  /* Invert overlay polarity for light UI */
+  --lift: 20 18 16;
+  --shade: 255 252 247;
+  --shadow-rgb: 48, 38, 24;
+  color-scheme: light;
 }
 
 /* Forest — charcoal + sage */
@@ -242,8 +261,8 @@
   }
 
   ::selection {
-    background: rgba(var(--accent-rgb), 0.3);
-    color: #fff;
+    background: rgba(var(--accent-rgb), 0.35);
+    color: var(--text);
   }
 
   :focus-visible {
@@ -258,16 +277,17 @@
   }
 
   .glass-panel {
-    background: color-mix(in srgb, var(--panel) 80%, transparent);
+    background: color-mix(in srgb, var(--panel) 88%, transparent);
     backdrop-filter: blur(24px);
-    border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+    box-shadow: 0 12px 40px rgba(var(--shadow-rgb), 0.08);
   }
 
   .text-gradient {
     background-image: linear-gradient(
       to bottom right,
-      #ffffff,
       var(--text),
+      var(--accent-glow),
       var(--accent)
     );
     -webkit-background-clip: text;
@@ -277,10 +297,63 @@
 
   .grid-bg {
     background-image:
-      linear-gradient(color-mix(in srgb, var(--muted) 12%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in srgb, var(--muted) 12%, transparent) 1px, transparent 1px);
+      linear-gradient(color-mix(in srgb, var(--muted) 14%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--muted) 14%, transparent) 1px, transparent 1px);
     background-size: 48px 48px;
   }
+
+  /* Soft elevated card shadow — works on light + dark */
+  .shadow-card {
+    box-shadow: 0 16px 48px rgba(var(--shadow-rgb), 0.18);
+  }
+
+  .shadow-card-lg {
+    box-shadow: 0 24px 64px rgba(var(--shadow-rgb), 0.22);
+  }
+}
+
+/* Solid elevated card — never translucent grey sludge */
+.theme-card {
+  background-color: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--text);
+  box-shadow: 0 1px 0 rgba(var(--shadow-rgb), 0.04), 0 10px 28px rgba(var(--shadow-rgb), 0.08);
+}
+
+/* Paper-only: quieter ambient + solid readable surfaces */
+[data-theme="paper"] .signal-field {
+  opacity: 0.28;
+}
+[data-theme="paper"] .glass-panel {
+  background: var(--panel);
+  border-color: var(--line);
+  backdrop-filter: none;
+  box-shadow: 0 8px 28px rgba(var(--shadow-rgb), 0.1);
+}
+/* Kill leftover semi-transparent “grey glass” on paper */
+[data-theme="paper"] .theme-card,
+[data-theme="paper"] [class*="bg-panel"] {
+  background-color: var(--panel) !important;
+  color: var(--text);
+  backdrop-filter: none;
+}
+[data-theme="paper"] h1,
+[data-theme="paper"] h2,
+[data-theme="paper"] h3,
+[data-theme="paper"] h4,
+[data-theme="paper"] .text-steel-bright {
+  color: var(--text) !important;
+}
+[data-theme="paper"] .text-steel {
+  color: var(--muted) !important;
+}
+[data-theme="paper"] .text-steel-dim {
+  color: var(--muted-dim) !important;
+}
+/* text-gradient must stay clip-based on paper (don’t force solid color) */
+[data-theme="paper"] .text-gradient {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
 }
 
 ::-webkit-scrollbar {

@@ -506,7 +506,7 @@ export default function Scene3D({ className = '' }) {
           <Scene mouse={mouse} lowPower={lowPower} />
         </Suspense>
       </Canvas>
-      <div className="pointer-events-none absolute inset-0 z-[2] rounded-2xl ring-1 ring-inset ring-white/[0.08]" />
+      <div className="pointer-events-none absolute inset-0 z-[2] rounded-2xl ring-1 ring-inset ring-lift/[0.08]" />
       <div className="pointer-events-none absolute inset-0 z-[2] rounded-2xl bg-gradient-to-t from-void/50 via-transparent to-transparent" />
     </div>
   );

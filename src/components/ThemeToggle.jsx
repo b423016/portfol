@@ -61,12 +61,12 @@ export default function ThemeToggle({ compact = false }) {
             transition={{ duration: 0.18 }}
             className={`${
               compact ? 'absolute bottom-full right-0 mb-2' : 'mb-3'
-            } w-[min(18rem,calc(100vw-2rem))] rounded-2xl border border-white/12 bg-panel shadow-2xl overflow-hidden`}
+            } w-[min(18rem,calc(100vw-2rem))] rounded-2xl border border-lift/12 bg-panel shadow-2xl overflow-hidden`}
             style={{ background: 'color-mix(in srgb, var(--panel) 92%, transparent)' }}
             role="listbox"
             aria-label="Color themes"
           >
-            <div className="px-4 py-3 border-b border-white/10">
+            <div className="px-4 py-3 border-b border-lift/10">
               <p className="font-mono text-[10px] tracking-[0.28em] text-signal uppercase">
                 Theme
               </p>
@@ -87,14 +87,14 @@ export default function ThemeToggle({ compact = false }) {
                       className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors ${
                         active
                           ? 'bg-signal/15 ring-1 ring-signal/35'
-                          : 'hover:bg-white/5'
+                          : 'hover:bg-lift/5'
                       }`}
                     >
                       <span className="flex -space-x-1.5 shrink-0" aria-hidden>
                         {t.swatch.map((c) => (
                           <span
                             key={c}
-                            className="w-5 h-5 rounded-full border border-white/20 shadow-sm"
+                            className="w-5 h-5 rounded-full border border-lift/20 shadow-sm"
                             style={{ background: c }}
                           />
                         ))}
@@ -122,7 +122,7 @@ export default function ThemeToggle({ compact = false }) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2.5 pl-2.5 pr-3.5 py-2 rounded-full border border-white/15 bg-panel text-steel-bright hover:border-signal/50 hover:text-white transition-colors shadow-xl backdrop-blur-xl"
+        className="flex items-center gap-2.5 pl-2.5 pr-3.5 py-2 rounded-full border border-lift/15 bg-panel text-steel-bright hover:border-signal/50 hover:text-steel-bright transition-colors shadow-xl backdrop-blur-xl"
         style={{ background: 'color-mix(in srgb, var(--panel) 90%, transparent)' }}
         aria-expanded={open}
         aria-haspopup="listbox"
@@ -132,7 +132,7 @@ export default function ThemeToggle({ compact = false }) {
           {current.swatch.map((c) => (
             <span
               key={c}
-              className="w-4 h-4 rounded-full border border-white/30"
+              className="w-4 h-4 rounded-full border border-lift/30"
               style={{ background: c }}
             />
           ))}
