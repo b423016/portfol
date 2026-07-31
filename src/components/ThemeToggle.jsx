@@ -74,7 +74,7 @@ export default function ThemeToggle({ compact = false }) {
                 Pick a palette · saved on this device
               </p>
             </div>
-            <ul className="p-2 space-y-0.5">
+            <ul className="p-2 space-y-0.5 max-h-[min(22rem,55vh)] overflow-y-auto">
               {THEMES.map((t) => {
                 const active = t.id === theme;
                 return (

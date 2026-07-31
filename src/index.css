@@ -92,7 +92,6 @@
   --ring-emissive: #a3a3a3;
 }
 
-/* 4. Warm studio — premium non-cyber */
 /* Sky — pure black + soft sky accent */
 [data-theme="sky"] {
   --void: #05070b;
@@ -113,6 +112,116 @@
   --packet-3: 56, 189, 248;
   --ring: #7dd3fc;
   --ring-emissive: #0ea5e9;
+}
+
+/* Paper — light editorial cream + ink */
+[data-theme="paper"] {
+  --void: #f4f0e8;
+  --panel: #ebe6dc;
+  --surface: #e2dcd0;
+  --text: #1c1916;
+  --muted: #6b635a;
+  --muted-dim: #8a8278;
+  --line: #d4cdc0;
+  --accent: #9a6b3f;
+  --accent-dim: #7a5330;
+  --accent-glow: #c4925e;
+  --accent-rgb: 154, 107, 63;
+  --wash: rgba(154, 107, 63, 0.1);
+  --wash-2: rgba(154, 107, 63, 0.04);
+  --packet-1: 28, 25, 22;
+  --packet-2: 154, 107, 63;
+  --packet-3: 122, 83, 48;
+  --ring: #9a6b3f;
+  --ring-emissive: #7a5330;
+}
+
+/* Forest — charcoal + sage */
+[data-theme="forest"] {
+  --void: #0c100e;
+  --panel: #141a16;
+  --surface: #1a221c;
+  --text: #e8efe8;
+  --muted: #8a9a8c;
+  --muted-dim: #657268;
+  --line: #2a342e;
+  --accent: #9cb89a;
+  --accent-dim: #7d9b76;
+  --accent-glow: #c0d4be;
+  --accent-rgb: 156, 184, 154;
+  --wash: rgba(156, 184, 154, 0.1);
+  --wash-2: rgba(156, 184, 154, 0.04);
+  --packet-1: 232, 239, 232;
+  --packet-2: 156, 184, 154;
+  --packet-3: 125, 155, 118;
+  --ring: #9cb89a;
+  --ring-emissive: #5f7a58;
+}
+
+/* Rose — noir + dusty blush */
+[data-theme="rose"] {
+  --void: #120e10;
+  --panel: #1c1618;
+  --surface: #261e22;
+  --text: #f5ecee;
+  --muted: #a8949a;
+  --muted-dim: #7a6a70;
+  --line: #3a2e32;
+  --accent: #e8a4b0;
+  --accent-dim: #c98494;
+  --accent-glow: #f5c4cc;
+  --accent-rgb: 232, 164, 176;
+  --wash: rgba(232, 164, 176, 0.1);
+  --wash-2: rgba(232, 164, 176, 0.04);
+  --packet-1: 245, 236, 238;
+  --packet-2: 232, 164, 176;
+  --packet-3: 201, 132, 148;
+  --ring: #e8a4b0;
+  --ring-emissive: #c98494;
+}
+
+/* Amber — espresso + honey gold */
+[data-theme="amber"] {
+  --void: #100e0a;
+  --panel: #1a1610;
+  --surface: #241e14;
+  --text: #f5f0e4;
+  --muted: #a89878;
+  --muted-dim: #7a6e58;
+  --line: #3a3224;
+  --accent: #e8b84a;
+  --accent-dim: #c99830;
+  --accent-glow: #f5d078;
+  --accent-rgb: 232, 184, 74;
+  --wash: rgba(232, 184, 74, 0.1);
+  --wash-2: rgba(232, 184, 74, 0.04);
+  --packet-1: 245, 240, 228;
+  --packet-2: 232, 184, 74;
+  --packet-3: 201, 152, 48;
+  --ring: #e8b84a;
+  --ring-emissive: #c99830;
+}
+
+/* Violet — plum-black + soft lilac */
+[data-theme="violet"] {
+  --void: #0e0c12;
+  --panel: #16141c;
+  --surface: #1e1a28;
+  --text: #f0ecf8;
+  --muted: #9a92b0;
+  --muted-dim: #6e6880;
+  --line: #2e2a3a;
+  --accent: #b8a4e8;
+  --accent-dim: #9680d0;
+  --accent-glow: #d4c8f5;
+  --accent-rgb: 184, 164, 232;
+  --wash: rgba(184, 164, 232, 0.1);
+  --wash-2: rgba(184, 164, 232, 0.04);
+  --packet-1: 240, 236, 248;
+  --packet-2: 184, 164, 232;
+  --packet-3: 150, 128, 208;
+  --ring: #b8a4e8;
+  --ring-emissive: #7c68b8;
 }
 
 @layer base {

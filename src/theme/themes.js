@@ -1,6 +1,12 @@
 /** Theme ids must match [data-theme] in index.css */
 export const THEMES = [
   {
+    id: 'warm',
+    label: 'Warm',
+    blurb: 'Studio · copper',
+    swatch: ['#12100E', '#E8A87C', '#A89F94'],
+  },
+  {
     id: 'navy',
     label: 'Navy',
     blurb: 'Halcyon · mint',
@@ -13,12 +19,6 @@ export const THEMES = [
     swatch: ['#0A0A0A', '#FAFAFA', '#A3A3A3'],
   },
   {
-    id: 'warm',
-    label: 'Warm',
-    blurb: 'Studio · copper',
-    swatch: ['#12100E', '#E8A87C', '#A89F94'],
-  },
-  {
     id: 'sky',
     label: 'Sky',
     blurb: 'Black · soft blue',
@@ -29,6 +29,36 @@ export const THEMES = [
     label: 'Signal',
     blurb: 'Current cyber',
     swatch: ['#05070B', '#2DD4BF', '#94A3B8'],
+  },
+  {
+    id: 'paper',
+    label: 'Paper',
+    blurb: 'Cream · ink',
+    swatch: ['#F4F0E8', '#1C1916', '#8B7355'],
+  },
+  {
+    id: 'forest',
+    label: 'Forest',
+    blurb: 'Charcoal · sage',
+    swatch: ['#0C100E', '#9CB89A', '#8A9A8C'],
+  },
+  {
+    id: 'rose',
+    label: 'Rose',
+    blurb: 'Noir · blush',
+    swatch: ['#120E10', '#E8A4B0', '#A8949A'],
+  },
+  {
+    id: 'amber',
+    label: 'Amber',
+    blurb: 'Espresso · honey',
+    swatch: ['#100E0A', '#E8B84A', '#A89878'],
+  },
+  {
+    id: 'violet',
+    label: 'Violet',
+    blurb: 'Plum · lilac',
+    swatch: ['#0E0C12', '#B8A4E8', '#9A92B0'],
   },
 ];
 
